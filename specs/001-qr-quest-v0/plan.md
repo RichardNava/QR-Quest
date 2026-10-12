@@ -65,7 +65,7 @@ El enfoque es el más corto posible para publicar ya y a coste cero: **una sola 
 | I. Simplicidad ante todo | ✅ | Una app, servicios gestionados gratuitos, sin capas intermedias (sin ORM, sin API REST aparte, sin estado global, sin i18n) |
 | II. Español de España | ✅ | Textos de interfaz fijos en español; documentación del plan en español |
 | III. Cero alcance fantasma | ✅ | Solo lo de RF-001…RF-018. Sin límite de intentos extra, sin analítica, sin roles, sin papelera, sin "recordar jugador" |
-| IV. Verificable por no técnico | ✅ | [quickstart.md](quickstart.md) mapea cada criterio CE-001…CE-009 a una comprobación manual |
+| IV. Verificable por no técnico | ✅ | [quickstart.md](quickstart.md) mapea cada criterio CE-001…CE-010 a una comprobación manual |
 | V. Bien securizada | ✅ | Código de puzzle aleatorio de 128 bits; recompensa y contraseña solo salen del servidor tras acertar; bucket privado; RLS en todas las tablas |
 | VI. Login solo master | ✅ | Solo `/aventuras/*` exige sesión; `/p/*` es público y sin cuenta |
 

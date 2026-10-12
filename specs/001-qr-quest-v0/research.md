@@ -20,7 +20,7 @@ No quedaban "NEEDS CLARIFICATION" en el contexto técnico; este documento recoge
 - **Decisión**: Supabase Postgres + Storage (bucket privado), con RLS para que cada master solo vea lo suyo.
 - **Por qué**: persistencia (RF-014) y propiedad (RF-002, historia 5.2) resueltas en la base de datos, no en código que pueda olvidarse. Un mismo proveedor reduce piezas.
 - **Sin ORM**: consultas directas con el cliente de Supabase; un ORM sería una capa más sin beneficio a este tamaño.
-- **Límites (RF-015)**: 4 MB por archivo y solo tipos de imagen se configuran en el bucket (el rechazo real, en servidor); la interfaz lo comprueba antes para dar un mensaje claro. El máximo de 40 por aventura lo impone un disparador SQL en la tabla `elementos`.
+- **Límites (RF-015)**: 4 MB por archivo y solo tipos de imagen se configuran en el bucket (el rechazo real, en servidor); la interfaz lo comprueba antes para dar un mensaje claro. El máximo de 40 por aventura lo impone un disparador SQL en la tabla `elementos`, que salta tanto al insertar como al actualizar el `tipo` (así cambiar un elemento de texto a imagen tampoco permite superar el límite).
 - **Alternativas**: guardar imágenes en la base de datos como binarios (infla los 500 MB gratuitos); Cloudinary/S3 (otra cuenta y claves).
 
 ## 4. Dirección no adivinable (RF-010, principio V)

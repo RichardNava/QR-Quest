@@ -37,5 +37,6 @@ Conectar el repositorio a Vercel, añadir las variables de entorno y desplegar. 
 | 11 | "He olvidado mi contraseña": pedir el enlace y fijar una nueva | Llega el correo y se puede volver a entrar | Historia 5 |
 | 12 | Sin sesión, abrir `/aventuras`; con otro master, intentar abrir una aventura ajena | Redirige a entrar / "no encontrada" | RF-002 |
 | 13 | Revisar en los paneles de Vercel, Supabase y Resend que no hay cobros | Coste 0 € | CE-009 |
+| 14 | Dar el móvil a una persona sin conocimientos técnicos que no haya visto la app; escanea un QR, escribe la contraseña y llega a la recompensa | Lo completa sin ayuda y sin dudar de qué hacer en cada pantalla | CE-010 |
 
 Detalles de tablas en [data-model.md](data-model.md) y de rutas en [contracts/interfaces.md](contracts/interfaces.md).

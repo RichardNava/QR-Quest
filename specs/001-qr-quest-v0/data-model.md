@@ -49,7 +49,7 @@ Textos e imágenes de un puzzle, tanto del enunciado como de la recompensa.
 Reglas de validación:
 - Una recompensa debe tener **al menos un elemento** (RF-004); la interfaz lo exige y la rejilla no se genera sin ello.
 - `modo` distinto de `normal` solo es válido con `parte = recompensa` y `tipo = imagen` (CHECK en SQL).
-- **Máximo 40 imágenes por aventura** (RF-015): disparador `BEFORE INSERT` que cuenta las filas `tipo = imagen` de la aventura (vía `puzzles`) y rechaza la 41.ª con un mensaje claro.
+- **Máximo 40 imágenes por aventura** (RF-015): disparador `BEFORE INSERT OR UPDATE OF tipo` que cuenta las demás filas `tipo = imagen` de la aventura (vía `puzzles`, excluyendo la propia fila) y rechaza la 41.ª con un mensaje claro; así cambiar un elemento de texto a imagen tampoco salta el límite.
 - **Máximo 4 MB por imagen** y solo tipos `image/*`: límite del bucket en Supabase Storage.
 
 ## Almacén de imágenes

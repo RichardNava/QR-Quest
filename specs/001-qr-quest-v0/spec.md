@@ -116,7 +116,7 @@ El master se registra con el mínimo de datos posible (correo electrónico y con
 
 ### Requisitos funcionales
 
-- **RF-001**: El sistema DEBE permitir a un usuario registrarse e iniciar sesión como master solo con correo electrónico y contraseña, sin solicitar ningún otro dato personal.
+- **RF-001**: El sistema DEBE permitir a un usuario registrarse e iniciar sesión como master solo con correo electrónico y contraseña, sin solicitar ningún otro dato personal. La página de inicio presenta el nombre del producto y ofrece entrar o crear cuenta.
 - **RF-002**: El sistema DEBE permitir a un master crear varias aventuras y editarlas y eliminarlas, y solo él puede gestionar las suyas.
 - **RF-003**: Cada aventura DEBE ser una cadena lineal de puzzles; cada puzzle tiene textos, imágenes opcionales, una contraseña o código y una recompensa.
 - **RF-004**: La recompensa DEBE poder contener una o varias imágenes y uno o varios textos (como mínimo un elemento, imagen o texto) con la pista hacia el siguiente puzzle; la del último puzzle es el mensaje de final.
@@ -157,6 +157,7 @@ El master se registra con el mínimo de datos posible (correo electrónico y con
 - **CE-007**: Intentar abrir una página de puzzle sin el enlace de su QR (por ejemplo, adivinando direcciones) falla en el 100 % de los casos.
 - **CE-008**: Al superar los límites de imágenes, el master recibe un mensaje que indica claramente el límite en el 100 % de los casos.
 - **CE-009**: El coste de funcionamiento del servicio es cero.
+- **CE-010**: Una persona sin conocimientos técnicos completa por primera vez el recorrido de jugador (escanear, introducir contraseña, ver recompensa) sin ayuda y sin dudar de qué hacer en cada pantalla.
 
 ## Supuestos
 

@@ -1,5 +1,8 @@
 <!--
 Sync Impact Report
+- Version change: 1.0.0 → 1.0.1 (PATCH): principio V aclara que el identificador es "opaco: cifrado o
+  aleatorio con entropía suficiente"; el token aleatorio de 128 bits del plan cumple la letra.
+- (Informe anterior) 
 - Version change: (plantilla sin rellenar) → 1.0.0
 - Principios añadidos: I. Simplicidad ante todo; II. Español de España; III. Cero alcance fantasma;
   IV. Verificable por una persona no técnica; V. Bien securizada; VI. Login solo para el usuario master
@@ -34,7 +37,8 @@ Cada criterio de éxito DEBE poder comprobarse usando la aplicación, sin leer c
 
 ### V. Bien securizada
 Las páginas de cada aventura SOLO son accesibles desde el enlace que genera su código QR. El
-identificador de la página en la URL va cifrado (no es adivinable ni deducible), de modo que los
+identificador de la página en la URL es opaco: cifrado o aleatorio con entropía suficiente (no es
+adivinable ni deducible), de modo que los
 jugadores no puedan saltarse pasos ni acceder a otras páginas del juego.
 
 ### VI. Login solo para el usuario master
@@ -48,4 +52,4 @@ tarea DEBE cumplirla; cualquier excepción se justifica por escrito. Las modific
 documentan y suben de versión: MAJOR si se elimina o redefine un principio, MINOR si se añade o
 amplía uno, PATCH para aclaraciones de redacción.
 
-**Version**: 1.0.0 | **Ratified**: 2026-10-12 | **Last Amended**: 2026-10-12
+**Version**: 1.0.1 | **Ratified**: 2026-10-12 | **Last Amended**: 2026-10-12
