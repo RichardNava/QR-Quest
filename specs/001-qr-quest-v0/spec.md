@@ -8,11 +8,22 @@
 
 **Entrada**: Especificación inicial "QR Quest v0" aportada por el usuario, aclarada mediante dos rondas de preguntas.
 
+## Aclaraciones
+
+### Sesión 2026-10-12
+
+- Q: ¿La recompensa puede combinar imagen y descripción a la vez? → A: Sí, ambas son opcionales, pero al menos una es obligatoria.
+- Q: ¿Cuántas imágenes y textos puede tener una recompensa? → A: Mínimo un elemento (imagen o texto); puede haber varias imágenes y varios textos si hace falta.
+- Q: Con varias imágenes en una recompensa, ¿a cuáles se aplica el modo difuminado o rompecabezas? → A: El modo se elige por imagen; cada imagen puede ser normal, difuminada o rompecabezas.
+- Q: Si el jugador recarga la página tras acertar, ¿debe volver a introducir la contraseña? → A: Sí; no se recuerda nada.
+- Q: Si el master edita una aventura ya impresa, ¿los QR impresos siguen funcionando? → A: Sí; cada QR queda ligado a su puzzle (no a su posición), aunque se reordene o se editen otros. Un puzzle borrado deja su QR con el mensaje amable de que ya no existe.
+- Q: ¿Cómo recupera el master su contraseña si la olvida? → A: Mediante un enlace de restablecimiento enviado a su correo.
+
 ## Escenarios de usuario y pruebas *(obligatorio)*
 
 ### Historia 1 - El master crea una aventura (Prioridad: P1)
 
-Un usuario master con cuenta crea una aventura nueva (por ejemplo, una búsqueda del tesoro por su barrio para el cumpleaños de sus hijos). Define una cadena lineal de puzzles: cada puzzle tiene textos e imágenes, una contraseña o código que lo resuelve y una recompensa (una imagen o descripción con la pista hacia el siguiente puzzle). El último puzzle muestra un mensaje de final de aventura en lugar de otra pista.
+Un usuario master con cuenta crea una aventura nueva (por ejemplo, una búsqueda del tesoro por su barrio para el cumpleaños de sus hijos). Define una cadena lineal de puzzles: cada puzzle tiene textos e imágenes, una contraseña o código que lo resuelve y una recompensa (una o varias imágenes y textos, mínimo un elemento, con la pista hacia el siguiente puzzle). El último puzzle muestra un mensaje de final de aventura en lugar de otra pista.
 
 **Por qué esta prioridad**: sin aventuras creadas no existe producto. Es el núcleo del valor para el master.
 
@@ -87,6 +98,7 @@ El master se registra con el mínimo de datos posible (correo electrónico y con
 
 1. **Dado** una persona sin cuenta, **cuando** se registra con correo y contraseña, **entonces** tiene acceso a su espacio de master sin que se le pidan más datos.
 2. **Dado** un master, **cuando** intenta ver o editar aventuras de otro master, **entonces** el sistema lo impide.
+3. **Dado** un master que olvidó su contraseña, **cuando** solicita restablecerla con su correo, **entonces** recibe un enlace para fijar una nueva y puede volver a entrar.
 
 ---
 
@@ -95,8 +107,8 @@ El master se registra con el mínimo de datos posible (correo electrónico y con
 - Imagen que supera 4 MB o aventura que supera 40 imágenes: se informa del límite y no se guarda.
 - Archivo subido que no es una imagen válida: se rechaza con un mensaje claro.
 - Una aventura sin puzzles o con un puzzle sin contraseña: no se puede generar la rejilla hasta completarla.
-- Aventura eliminada mientras un QR sigue impreso: al escanearlo se muestra un mensaje amable de que la aventura ya no existe.
-- Jugador que cambia de dispositivo o recarga la página: el puzzle vuelve a mostrarse desde el principio porque no se guarda progreso.
+- Aventura o puzzle eliminado mientras su QR sigue impreso: al escanearlo se muestra un mensaje amable de que ya no existe.
+- Jugador que cambia de dispositivo o recarga la página (incluso tras acertar): el puzzle vuelve a mostrarse desde el principio y debe introducir de nuevo la contraseña, porque no se guarda progreso.
 - Puzzle de rompecabezas con una imagen muy pequeña o de proporciones extremas: el rompecabezas sigue siendo jugable.
 - Rejilla con muchos QR (por ejemplo, decenas de puzzles): se reparte en varias páginas impresas.
 
@@ -107,12 +119,12 @@ El master se registra con el mínimo de datos posible (correo electrónico y con
 - **RF-001**: El sistema DEBE permitir a un usuario registrarse e iniciar sesión como master solo con correo electrónico y contraseña, sin solicitar ningún otro dato personal.
 - **RF-002**: El sistema DEBE permitir a un master crear varias aventuras y editarlas y eliminarlas, y solo él puede gestionar las suyas.
 - **RF-003**: Cada aventura DEBE ser una cadena lineal de puzzles; cada puzzle tiene textos, imágenes opcionales, una contraseña o código y una recompensa.
-- **RF-004**: La recompensa DEBE poder ser una imagen o una descripción con la pista hacia el siguiente puzzle; la del último puzzle es el mensaje de final.
-- **RF-005**: El sistema DEBE permitir que la imagen de la recompensa se presente en modo normal, difuminado o rompecabezas, a elección del master.
+- **RF-004**: La recompensa DEBE poder contener una o varias imágenes y uno o varios textos (como mínimo un elemento, imagen o texto) con la pista hacia el siguiente puzzle; la del último puzzle es el mensaje de final.
+- **RF-005**: El sistema DEBE permitir que cada imagen de la recompensa se presente en modo normal, difuminado o rompecabezas, a elección del master para cada imagen por separado.
 - **RF-006**: En el modo difuminado, la imagen DEBE mostrarse con un difuminado que dificulte reconocerla y el jugador DEBE poder revelarla.
 - **RF-007**: En el modo rompecabezas, la imagen DEBE fragmentarse en trozos que el jugador recompone arrastrando y soltando.
 - **RF-008**: El sistema DEBE generar para cada aventura una rejilla con un código QR por puzzle, con etiqueta identificativa, y DEBE poder imprimirse sin cortar ni deformar los QR.
-- **RF-009**: Cada QR DEBE enlazar con la página del puzzle correspondiente dentro de la propia web.
+- **RF-009**: Cada QR DEBE enlazar con la página del puzzle correspondiente dentro de la propia web. El enlace pertenece al puzzle, no a su posición: reordenar, editar o añadir puzzles NO invalida los QR ya impresos de los demás. Si se borra un puzzle, su QR muestra un mensaje amable de que ya no existe.
 - **RF-010**: Las páginas de los puzzles DEBEN ser accesibles únicamente desde el enlace del QR; el identificador del enlace no puede ser adivinable ni deducible, de modo que los jugadores no puedan saltarse pasos ni acceder a otras páginas.
 - **RF-011**: Los jugadores DEBEN poder jugar sin cuenta ni inicio de sesión.
 - **RF-012**: La recompensa DEBE mostrarse solo si el jugador introduce la contraseña correcta; la comparación no distingue mayúsculas, minúsculas ni tildes. No hay límite de intentos y los fallos muestran un mensaje amable.
@@ -128,7 +140,7 @@ El master se registra con el mínimo de datos posible (correo electrónico y con
 - **Master**: persona que crea aventuras. Datos: correo electrónico y contraseña.
 - **Aventura**: conjunto ordenado de puzzles propiedad de un master, con nombre.
 - **Puzzle**: página de juego con textos, imágenes, contraseña, posición en la cadena y recompensa. Tiene su QR asociado.
-- **Recompensa**: imagen o descripción con la pista siguiente, con modo de presentación (normal, difuminado, rompecabezas); en el último puzzle es el mensaje de final.
+- **Recompensa**: una o varias imágenes y/o textos (al menos un elemento) con la pista siguiente, con un modo de presentación por imagen (normal, difuminado, rompecabezas); en el último puzzle es el mensaje de final.
 - **Imagen**: archivo adjunto a un puzzle o recompensa, sujeto a los límites de tamaño y cantidad.
 - **Rejilla de QR**: vista imprimible de todos los QR de una aventura.
 
@@ -149,7 +161,7 @@ El master se registra con el mínimo de datos posible (correo electrónico y con
 ## Supuestos
 
 - Los jugadores usan un móvil con cámara y conexión a internet durante el juego.
-- La recuperación de contraseña por correo queda dentro de lo mínimo imprescindible para el master; no se añaden otras funciones de cuenta.
+- El master puede recuperar su contraseña mediante un enlace de restablecimiento enviado a su correo; no se añaden otras funciones de cuenta.
 - Cada puzzle tiene una única contraseña correcta.
 - La rejilla se imprime desde el navegador (vista imprimible).
 - Una aventura puede tener cualquier número de puzzles dentro de los límites de imágenes; no se fija un máximo propio.
