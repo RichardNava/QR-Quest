@@ -22,13 +22,13 @@ function Pieza({ indice, posicion, url }: { indice: number; posicion: number; ur
     zIndex: arrastrable.isDragging ? 10 : undefined,
   };
   return (
-    <div ref={destino.setNodeRef} className={`aspect-square ${destino.isOver ? "ring-2 ring-indigo-500" : ""}`}>
+    <div ref={destino.setNodeRef} className={`h-full w-full ${destino.isOver ? "ring-2 ring-inset ring-indigo-500" : ""}`}>
       <div
         ref={arrastrable.setNodeRef}
         {...arrastrable.listeners}
         {...arrastrable.attributes}
         style={estilo}
-        className="h-full w-full cursor-grab border border-white/60"
+        className="h-full w-full cursor-grab"
         aria-label={`Pieza ${indice + 1}`}
       />
     </div>
@@ -78,7 +78,7 @@ export default function Rompecabezas({ url, alAcabar }: { url: string; alAcabar?
     <div className="space-y-2">
       <p className="text-sm text-slate-600">Arrastra los trozos para recomponer la imagen</p>
       <DndContext sensors={sensores} onDragEnd={alSoltar}>
-        <div className="grid w-full grid-cols-3 gap-0.5" style={{ aspectRatio: String(proporcion) }}>
+        <div className="grid w-full grid-cols-3 grid-rows-3 gap-0 overflow-hidden" style={{ aspectRatio: String(proporcion) }}>
           {orden.map((indice, posicion) => (
             <Pieza key={posicion} indice={indice} posicion={posicion} url={url} />
           ))}

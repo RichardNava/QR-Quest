@@ -107,7 +107,7 @@ app/
 │   └── actions.ts                  # comprobarContrasena(token, texto)
 └── layout.tsx
 components/
-├── Recompensa.tsx                  # Normal / difuminado / rompecabezas
+├── ContenidoPuzzle.tsx               # Normal / difuminado / rompecabezas
 ├── Rompecabezas.tsx
 ├── EditorElemento.tsx
 └── SubidaImagen.tsx

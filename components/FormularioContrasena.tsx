@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { comprobarContrasena } from "@/app/p/[token]/actions";
 import type { ElementoVista } from "@/lib/tipos";
-import Recompensa from "./Recompensa";
+import ContenidoPuzzle from "./ContenidoPuzzle";
 import { boton, campo, error as estiloError } from "./estilos";
 
 export default function FormularioContrasena({ token }: { token: string }) {
@@ -28,7 +28,7 @@ export default function FormularioContrasena({ token }: { token: string }) {
         <h2 className="text-2xl font-bold text-green-700">
           {premio.esFinal ? "¡Fin de la aventura!" : "¡Correcto!"}
         </h2>
-        <Recompensa elementos={premio.elementos} />
+        <ContenidoPuzzle elementos={premio.elementos} />
       </section>
     );
   }

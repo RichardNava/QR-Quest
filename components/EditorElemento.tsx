@@ -52,20 +52,18 @@ export default function EditorElemento({ elemento, aventuraId, parte, esPrimero,
             // eslint-disable-next-line @next/next/no-img-element
             <img src={elemento.urlVista} alt="Vista previa de la imagen" className="max-h-48 rounded-lg" />
           )}
-          {parte === "recompensa" && (
-            <label className="block text-sm font-medium">
-              Cómo se muestra
-              <select
-                value={elemento.modo}
-                onChange={(e) => ejecutar(() => actualizarElemento(elemento.id, aventuraId, { modo: e.target.value as Modo }))}
-                className={campo}
-              >
-                <option value="normal">Normal</option>
-                <option value="difuminado">Difuminado</option>
-                <option value="rompecabezas">Rompecabezas</option>
-              </select>
-            </label>
-          )}
+          <label className="block text-sm font-medium">
+            Cómo se muestra
+            <select
+              value={elemento.modo}
+              onChange={(e) => ejecutar(() => actualizarElemento(elemento.id, aventuraId, { modo: e.target.value as Modo }))}
+              className={campo}
+            >
+              <option value="normal">Normal</option>
+              <option value="difuminado">Difuminado</option>
+              <option value="rompecabezas">Rompecabezas</option>
+            </select>
+          </label>
         </div>
       )}
       <div className="flex flex-wrap gap-2">

@@ -5,11 +5,11 @@ import type { ElementoVista } from "@/lib/tipos";
 import ImagenDifuminada from "./ImagenDifuminada";
 import Rompecabezas from "./Rompecabezas";
 
-export default function Recompensa({ elementos }: { elementos: ElementoVista[] }) {
+export default function ContenidoPuzzle({ elementos, textosSiempreVisibles = false }: { elementos: ElementoVista[]; textosSiempreVisibles?: boolean }) {
   const totalRompecabezas = elementos.filter((e) => e.tipo === "imagen" && e.modo === "rompecabezas").length;
   const [resueltos, setResueltos] = useState(0);
   // La pista (textos) aparece cuando todos los rompecabezas están resueltos
-  const textosVisibles = resueltos >= totalRompecabezas;
+  const textosVisibles = textosSiempreVisibles || resueltos >= totalRompecabezas;
 
   return (
     <div className="space-y-4">
@@ -24,7 +24,7 @@ export default function Recompensa({ elementos }: { elementos: ElementoVista[] }
           return <Rompecabezas key={i} url={e.url} alAcabar={() => setResueltos((n) => n + 1)} />;
         }
         // eslint-disable-next-line @next/next/no-img-element
-        return <img key={i} src={e.url} alt="Recompensa" className="h-auto max-w-full rounded-lg" />;
+        return <img key={i} src={e.url} alt="Imagen del puzzle" className="h-auto max-w-full rounded-lg" />;
       })}
     </div>
   );
