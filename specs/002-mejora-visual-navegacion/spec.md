@@ -91,7 +91,7 @@ Tanto el master como el jugador distinguen con claridad el estado de cada puzzle
 - **FR-005**: En la página de un puzzle para el jugador, la navegación DEBE mostrar únicamente la marca «QR Quest» enlazada a la portada, sin opciones de gestión, de acceso ni información de la aventura distinta de la que ya se mostraba.
 - **FR-006**: La navegación DEBE ser utilizable en pantallas de móvil sin desplazamiento horizontal y con áreas de pulsación cómodas.
 - **FR-007**: La navegación DEBE quedar oculta al imprimir la rejilla de QR.
-- **FR-008**: La aplicación DEBE usar una única familia tipográfica y una escala de tamaños coherente para títulos, subtítulos, texto y etiquetas en todas las páginas.
+- **FR-008**: La aplicación DEBE usar como máximo dos familias tipográficas (una para títulos y otra para el texto) y una escala de tamaños coherente para títulos, subtítulos, texto y etiquetas en todas las páginas.
 - **FR-009**: Los colores de la aplicación DEBEN proceder de una paleta limitada (con predominio de tonos cálidos que evoquen aventura) definida en un único lugar, de forma que modificarla se refleje en toda la aplicación.
 - **FR-010**: La aplicación DEBE aplicar una escala de espaciado uniforme en márgenes, separaciones y tamaños de campos y botones.
 - **FR-011**: La aplicación DEBE establecer una jerarquía visual clara y consistente entre títulos, tablas o listas, formularios y acciones principales y secundarias.
@@ -102,6 +102,7 @@ Tanto el master como el jugador distinguen con claridad el estado de cada puzzle
 - **FR-016**: La aplicación DEBE mantener el enfoque mobile-first y adaptarse correctamente a tabletas y pantallas de escritorio.
 - **FR-017**: Todos los textos visibles DEBEN estar en español de España; los textos existentes NO DEBEN cambiar de significado.
 - **FR-018**: La funcionalidad DEBE ser exclusivamente visual: NO DEBE alterar el comportamiento, las reglas de negocio, los datos almacenados, las rutas existentes ni la estructura del proyecto definidos en la spec 001.
+- **FR-020**: La aplicación DEBE tener una identidad visual de aventura reconocible: fondos con degradado y textura decorativa (por ejemplo, curvas de nivel de un mapa) y un bloque de portada destacado con ilustración, sin imágenes pesadas y sin aparecer al imprimir.
 - **FR-019**: La rejilla de QR impresa DEBE conservar su legibilidad, su tamaño de QR y su paginado actuales.
 
 ### Entidades clave

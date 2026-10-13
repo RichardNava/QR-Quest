@@ -46,9 +46,9 @@ Contrastes calculados (mínimo exigido 4,5:1 para texto normal, FR-012):
 - **Motivo**: todos superan el mínimo, también en móvil al aire libre.
 - **Alternativas**: usar la paleta ámbar por defecto de Tailwind: contraste insuficiente del texto ámbar sobre crema.
 
-## 3. Tipografía
+## 3. Tipografía (revisada tras la primera revisión visual)
 
-- **Decisión**: una sola familia sans-serif amigable con soporte completo del español (**Nunito**), cargada con `next/font/google` (subconjunto latino, `display: swap`). Escala: título de página 28–32 px/extrabold, título de sección 20 px/bold, texto 16 px, apoyo 14 px.
+- **Decisión**: dos familias, ambas con soporte completo del español: **Barlow Condensed** (títulos, mayúsculas, aspecto de expedición) e **Inter** (texto). Se cargan con `next/font/google` (subconjunto latino, `display: swap`). Escala: título de página 28–32 px/extrabold, título de sección 20 px/bold, texto 16 px, apoyo 14 px.
 - **Motivo**: FR-008 pide una única familia; `next/font` descarga la fuente al compilar y la sirve desde la propia web, sin peticiones a terceros desde el móvil del jugador y sin dependencia nueva.
 - **Alternativas**: dos familias (serif para títulos): contradice FR-008; fuente del sistema: más simple pero no aporta identidad; enlace directo a Google Fonts: petición externa en cada visita.
 

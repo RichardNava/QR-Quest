@@ -16,7 +16,8 @@ function ficheros(dir: string): string[] {
 const prohibidos = [
   /\b(bg|text|border|ring|from|to|via|divide|outline|fill|stroke|decoration|shadow|accent|caret)-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d{2,3}\b/g,
   /#[0-9a-fA-F]{3,8}\b/g,
-  /\b(rgb|rgba|hsl|hsla)\(/g,
+  // Se permite rgb(var(--color-…)): es una referencia a la paleta, no un color nuevo
+  /\b(rgb|rgba|hsl|hsla)\((?!var\(--color-)/g,
 ];
 
 // Excepción: las tarjetas de QR se imprimen en blanco puro para que el código se escanee bien

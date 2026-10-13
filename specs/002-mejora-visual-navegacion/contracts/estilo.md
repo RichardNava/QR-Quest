@@ -19,7 +19,7 @@ Definida solo en `app/globals.css`. Valores y contrastes en [research.md](../res
 
 ## Tipografía
 
-Una sola familia (Nunito). Escala:
+Dos familias: Barlow Condensed (títulos, en mayúsculas) e Inter (texto). Escala:
 
 | Rol | Tamaño / peso | Preset |
 |---|---|---|

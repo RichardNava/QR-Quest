@@ -2,24 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Paleta de QR Quest: ÚNICO lugar donde se definen los colores de la aplicación */
+/*
+  Paleta de QR Quest: ÚNICO lugar donde se definen los colores de la aplicación.
+  Cada color se guarda como canales «R G B» para poder usar transparencias (bg-noche/90).
+*/
 :root {
-  --color-papel: #fbf3e4;
-  --color-superficie: #fffdf8;
-  --color-tinta: #3b2a1e;
-  --color-tinta-suave: #6b5442;
-  --color-marca: #b4491f;
-  --color-marca-oscura: #8f3715;
-  --color-acento: #e2a33b;
-  --color-acento-suave: #f6dfa8;
-  --color-borde: #e3d3b6;
-  --color-exito: #3f6b2f;
-  --color-exito-suave: #e4efd8;
-  --color-peligro: #a32a24;
-  --color-peligro-suave: #f8e1dc;
+  --color-papel: 246 236 214;
+  --color-superficie: 255 252 245;
+  --color-tinta: 43 29 20;
+  --color-tinta-suave: 102 80 64;
+  --color-marca: 184 67 26;
+  --color-marca-oscura: 138 47 16;
+  --color-acento: 237 168 58;
+  --color-acento-suave: 248 224 166;
+  --color-borde: 226 207 169;
+  --color-exito: 63 107 47;
+  --color-exito-suave: 228 239 216;
+  --color-peligro: 163 42 36;
+  --color-peligro-suave: 248 225 220;
+  --color-noche: 30 20 15;
+  --color-noche-suave: 58 38 26;
+}
+
+@layer base {
+  html {
+    background-color: rgb(var(--color-papel));
+  }
+  /* Resplandor de amanecer arriba y degradado cálido al pie de la página */
+  body {
+    background-image:
+      radial-gradient(70rem 28rem at 50% -8rem, rgb(var(--color-acento) / 0.35), transparent 70%),
+      linear-gradient(to bottom, transparent 55%, rgb(var(--color-marca) / 0.1));
+    background-attachment: fixed;
+  }
+  /* Textura de mapa topográfico (curvas de nivel) */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: rgb(var(--color-marca) / 0.1);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='580' height='580' viewBox='-30 -30 580 580' fill='none' stroke='black' stroke-width='1.4'%3E%3Cpath d='M70 150c30-70 120-95 190-60s100 105 60 165-130 80-190 50S40 220 70 150z'/%3E%3Cpath d='M105 160c25-48 90-65 140-40s72 76 44 118-96 56-140 36-69-70-44-114z'/%3E%3Cpath d='M140 170c18-28 58-38 90-22s46 50 28 78-62 36-92 22-44-48-26-78z'/%3E%3Cpath d='M180 180c10-14 32-18 48-9s22 28 12 42-32 17-48 9-22-28-12-42z'/%3E%3Cpath d='M330 380c24-52 96-70 150-40s70 90 30 134-110 50-160 20-44-72-20-114z'/%3E%3Cpath d='M360 392c18-34 70-46 108-26s48 62 20 92-78 34-112 14-34-50-16-80z'/%3E%3Cpath d='M392 404c12-18 42-24 64-12s28 38 12 56-48 20-68 8-20-34-8-52z'/%3E%3Cpath d='M20 440c20-30 64-38 90-18s28 56 0 72-76 4-90-24z'/%3E%3Cpath d='M390 40c18-24 54-30 76-12s22 50-2 62-64 4-78-22z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='580' height='580' viewBox='-30 -30 580 580' fill='none' stroke='black' stroke-width='1.4'%3E%3Cpath d='M70 150c30-70 120-95 190-60s100 105 60 165-130 80-190 50S40 220 70 150z'/%3E%3Cpath d='M105 160c25-48 90-65 140-40s72 76 44 118-96 56-140 36-69-70-44-114z'/%3E%3Cpath d='M140 170c18-28 58-38 90-22s46 50 28 78-62 36-92 22-44-48-26-78z'/%3E%3Cpath d='M180 180c10-14 32-18 48-9s22 28 12 42-32 17-48 9-22-28-12-42z'/%3E%3Cpath d='M330 380c24-52 96-70 150-40s70 90 30 134-110 50-160 20-44-72-20-114z'/%3E%3Cpath d='M360 392c18-34 70-46 108-26s48 62 20 92-78 34-112 14-34-50-16-80z'/%3E%3Cpath d='M392 404c12-18 42-24 64-12s28 38 12 56-48 20-68 8-20-34-8-52z'/%3E%3Cpath d='M20 440c20-30 64-38 90-18s28 56 0 72-76 4-90-24z'/%3E%3Cpath d='M390 40c18-24 54-30 76-12s22 50-2 62-64 4-78-22z'/%3E%3C/svg%3E");
+    -webkit-mask-size: 580px 580px;
+    mask-size: 580px 580px;
+  }
+}
+
+@layer components {
+  /* Bloque destacado con degradado de atardecer y curvas de nivel superpuestas */
+  .hero-aventura {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background-image:
+      radial-gradient(40rem 20rem at 85% 0%, rgb(var(--color-acento) / 0.55), transparent 65%),
+      linear-gradient(160deg, rgb(var(--color-noche)) 0%, rgb(var(--color-noche-suave)) 38%, rgb(var(--color-marca-oscura)) 72%, rgb(var(--color-marca)) 100%);
+  }
+  .hero-aventura::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: rgb(var(--color-acento) / 0.16);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='580' height='580' viewBox='-30 -30 580 580' fill='none' stroke='black' stroke-width='1.4'%3E%3Cpath d='M70 150c30-70 120-95 190-60s100 105 60 165-130 80-190 50S40 220 70 150z'/%3E%3Cpath d='M105 160c25-48 90-65 140-40s72 76 44 118-96 56-140 36-69-70-44-114z'/%3E%3Cpath d='M140 170c18-28 58-38 90-22s46 50 28 78-62 36-92 22-44-48-26-78z'/%3E%3Cpath d='M180 180c10-14 32-18 48-9s22 28 12 42-32 17-48 9-22-28-12-42z'/%3E%3Cpath d='M330 380c24-52 96-70 150-40s70 90 30 134-110 50-160 20-44-72-20-114z'/%3E%3Cpath d='M360 392c18-34 70-46 108-26s48 62 20 92-78 34-112 14-34-50-16-80z'/%3E%3Cpath d='M392 404c12-18 42-24 64-12s28 38 12 56-48 20-68 8-20-34-8-52z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='580' height='580' viewBox='-30 -30 580 580' fill='none' stroke='black' stroke-width='1.4'%3E%3Cpath d='M70 150c30-70 120-95 190-60s100 105 60 165-130 80-190 50S40 220 70 150z'/%3E%3Cpath d='M105 160c25-48 90-65 140-40s72 76 44 118-96 56-140 36-69-70-44-114z'/%3E%3Cpath d='M140 170c18-28 58-38 90-22s46 50 28 78-62 36-92 22-44-48-26-78z'/%3E%3Cpath d='M180 180c10-14 32-18 48-9s22 28 12 42-32 17-48 9-22-28-12-42z'/%3E%3Cpath d='M330 380c24-52 96-70 150-40s70 90 30 134-110 50-160 20-44-72-20-114z'/%3E%3Cpath d='M360 392c18-34 70-46 108-26s48 62 20 92-78 34-112 14-34-50-16-80z'/%3E%3Cpath d='M392 404c12-18 42-24 64-12s28 38 12 56-48 20-68 8-20-34-8-52z'/%3E%3C/svg%3E");
+    -webkit-mask-size: 580px 580px;
+    mask-size: 580px 580px;
+  }
 }
 
 @media print {
   .no-imprimir { display: none !important; }
-  body { background: #fff; }
+  html, body { background: #fff !important; background-image: none !important; }
+  body::before { display: none; }
 }
