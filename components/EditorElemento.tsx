@@ -3,7 +3,8 @@
 import { useState, useTransition } from "react";
 import { actualizarElemento, eliminarElemento, moverElemento } from "@/app/aventuras/[id]/actions";
 import type { Modo, Parte } from "@/lib/tipos";
-import { botonPeligro, botonSecundario, campo, error as estiloError } from "./estilos";
+import Insignia from "./Insignia";
+import { botonPeligro, botonSecundario, campo, error as estiloError, etiqueta } from "./estilos";
 
 export type ElementoEditable = {
   id: string;
@@ -35,7 +36,7 @@ export default function EditorElemento({ elemento, aventuraId, parte, esPrimero,
   }
 
   return (
-    <div className="space-y-2 rounded-lg border border-slate-200 bg-slate-50 p-3">
+    <div className="space-y-2 rounded-lg border border-borde bg-papel p-3">
       {elemento.tipo === "texto" ? (
         <textarea
           value={texto}
@@ -52,7 +53,12 @@ export default function EditorElemento({ elemento, aventuraId, parte, esPrimero,
             // eslint-disable-next-line @next/next/no-img-element
             <img src={elemento.urlVista} alt="Vista previa de la imagen" className="max-h-48 rounded-lg" />
           )}
-          <label className="block text-sm font-medium">
+          <div>
+            {elemento.modo === "normal" && <Insignia variante="neutra">Normal</Insignia>}
+            {elemento.modo === "difuminado" && <Insignia variante="aviso">Difuminada</Insignia>}
+            {elemento.modo === "rompecabezas" && <Insignia variante="aviso">Rompecabezas</Insignia>}
+          </div>
+          <label className={etiqueta}>
             Cómo se muestra
             <select
               value={elemento.modo}

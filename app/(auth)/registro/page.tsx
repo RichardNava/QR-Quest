@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { crearClienteNavegador } from "@/lib/supabase/cliente";
-import { boton, campo, enlace, error as estiloError, tarjeta } from "@/components/estilos";
+import { boton, campo, enlace, error as estiloError, tarjeta, titulo1, etiqueta, apoyo } from "@/components/estilos";
 
 function traducir(mensaje: string): string {
   const m = mensaje.toLowerCase();
@@ -44,13 +44,13 @@ export default function Registro() {
 
   return (
     <main className={`${tarjeta} mx-auto max-w-md space-y-4`}>
-      <h1 className="text-2xl font-bold">Crear cuenta</h1>
+      <h1 className={titulo1}>Crear cuenta</h1>
       <form onSubmit={enviar} className="space-y-3">
-        <label className="block text-sm font-medium">
+        <label className={etiqueta}>
           Correo electrónico
           <input type="email" required value={correo} onChange={(e) => setCorreo(e.target.value)} className={campo} autoComplete="email" />
         </label>
-        <label className="block text-sm font-medium">
+        <label className={etiqueta}>
           Contraseña
           <input type="password" required minLength={6} value={contrasena} onChange={(e) => setContrasena(e.target.value)} className={campo} autoComplete="new-password" />
         </label>
@@ -59,7 +59,7 @@ export default function Registro() {
           {enviando ? "Creando…" : "Crear cuenta"}
         </button>
       </form>
-      <p className="text-sm">
+      <p className={apoyo}>
         ¿Ya tienes cuenta? <Link href="/entrar" className={enlace}>Entrar</Link>
       </p>
     </main>

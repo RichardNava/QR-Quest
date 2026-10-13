@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Paleta de QR Quest: ÚNICO lugar donde se definen los colores de la aplicación */
+:root {
+  --color-papel: #fbf3e4;
+  --color-superficie: #fffdf8;
+  --color-tinta: #3b2a1e;
+  --color-tinta-suave: #6b5442;
+  --color-marca: #b4491f;
+  --color-marca-oscura: #8f3715;
+  --color-acento: #e2a33b;
+  --color-acento-suave: #f6dfa8;
+  --color-borde: #e3d3b6;
+  --color-exito: #3f6b2f;
+  --color-exito-suave: #e4efd8;
+  --color-peligro: #a32a24;
+  --color-peligro-suave: #f8e1dc;
+}
+
 @media print {
   .no-imprimir { display: none !important; }
   body { background: #fff; }

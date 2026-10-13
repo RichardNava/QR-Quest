@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import BotonAnadirPuzzle from "@/components/BotonAnadirPuzzle";
 import EditorPuzzle from "@/components/EditorPuzzle";
 import NombreAventura from "@/components/NombreAventura";
-import { botonSecundario } from "@/components/estilos";
+import { apoyo, botonSecundario } from "@/components/estilos";
 import { MAX_IMAGENES_AVENTURA } from "@/lib/limites";
 import { crearClienteServidor } from "@/lib/supabase/servidor";
 import type { Elemento, Puzzle } from "@/lib/tipos";
@@ -52,12 +52,12 @@ export default async function EditorAventura({ params }: { params: { id: string 
   const totalImagenes = elementos.filter((e) => e.tipo === "imagen").length;
 
   return (
-    <main className="space-y-4">
+    <main className="space-y-6">
       <div className="flex flex-wrap items-center gap-3">
         <NombreAventura id={aventura.id} nombre={aventura.nombre} />
         <Link href={`/aventuras/${aventura.id}/rejilla`} className={botonSecundario}>Imprimir rejilla</Link>
       </div>
-      <p className="text-sm text-slate-600">
+      <p className={apoyo}>
         {totalImagenes} de {MAX_IMAGENES_AVENTURA} imágenes
       </p>
       {puzzles.map((p, i) => (

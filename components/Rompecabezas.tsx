@@ -3,6 +3,7 @@
 import { DndContext, MouseSensor, TouchSensor, useDraggable, useDroppable, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core";
 import { useEffect, useState } from "react";
 import { barajar, estaResuelto } from "@/lib/barajar";
+import Insignia from "./Insignia";
 
 const N = 3;
 
@@ -22,7 +23,7 @@ function Pieza({ indice, posicion, url }: { indice: number; posicion: number; ur
     zIndex: arrastrable.isDragging ? 10 : undefined,
   };
   return (
-    <div ref={destino.setNodeRef} className={`h-full w-full ${destino.isOver ? "ring-2 ring-inset ring-indigo-500" : ""}`}>
+    <div ref={destino.setNodeRef} className={`h-full w-full ${destino.isOver ? "ring-2 ring-inset ring-marca" : ""}`}>
       <div
         ref={arrastrable.setNodeRef}
         {...arrastrable.listeners}
@@ -69,16 +70,20 @@ export default function Rompecabezas({ url, alAcabar }: { url: string; alAcabar?
 
   if (resuelto) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img src={url} alt="Imagen recompuesta" className="h-auto max-w-full rounded-lg" />
+      <div className="space-y-2">
+        <Insignia variante="exito" icono="✓">Recompuesto</Insignia>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={url} alt="Imagen recompuesta" className="h-auto max-w-full rounded-lg border border-borde" />
+      </div>
     );
   }
 
   return (
     <div className="space-y-2">
-      <p className="text-sm text-slate-600">Arrastra los trozos para recomponer la imagen</p>
+      <Insignia variante="aviso">Rompecabezas · por resolver</Insignia>
+      <p className="text-sm text-tinta-suave">Arrastra los trozos para recomponer la imagen</p>
       <DndContext sensors={sensores} onDragEnd={alSoltar}>
-        <div className="grid w-full grid-cols-3 grid-rows-3 gap-0 overflow-hidden" style={{ aspectRatio: String(proporcion) }}>
+        <div className="grid w-full grid-cols-3 grid-rows-3 gap-0 overflow-hidden rounded-lg border-2 border-acento" style={{ aspectRatio: String(proporcion) }}>
           {orden.map((indice, posicion) => (
             <Pieza key={posicion} indice={indice} posicion={posicion} url={url} />
           ))}

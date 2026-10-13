@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { crearClienteNavegador } from "@/lib/supabase/cliente";
-import { boton, campo, enlace, error as estiloError, tarjeta } from "@/components/estilos";
+import { boton, campo, enlace, error as estiloError, tarjeta, titulo1, etiqueta, apoyo } from "@/components/estilos";
 
 export default function Entrar() {
   const router = useRouter();
@@ -30,13 +30,13 @@ export default function Entrar() {
 
   return (
     <main className={`${tarjeta} mx-auto max-w-md space-y-4`}>
-      <h1 className="text-2xl font-bold">Entrar</h1>
+      <h1 className={titulo1}>Entrar</h1>
       <form onSubmit={enviar} className="space-y-3">
-        <label className="block text-sm font-medium">
+        <label className={etiqueta}>
           Correo electrónico
           <input type="email" required value={correo} onChange={(e) => setCorreo(e.target.value)} className={campo} autoComplete="email" />
         </label>
-        <label className="block text-sm font-medium">
+        <label className={etiqueta}>
           Contraseña
           <input type="password" required value={contrasena} onChange={(e) => setContrasena(e.target.value)} className={campo} autoComplete="current-password" />
         </label>
@@ -45,7 +45,7 @@ export default function Entrar() {
           {enviando ? "Entrando…" : "Entrar"}
         </button>
       </form>
-      <p className="space-y-1 text-sm">
+      <p className={`space-y-1 ${apoyo}`}>
         <Link href="/recuperar" className={enlace}>He olvidado mi contraseña</Link>
         <br />
         ¿No tienes cuenta? <Link href="/registro" className={enlace}>Crear cuenta</Link>

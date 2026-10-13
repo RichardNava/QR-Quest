@@ -1,4 +1,5 @@
 import ListaAventuras from "@/components/ListaAventuras";
+import { titulo1 } from "@/components/estilos";
 import { crearClienteServidor } from "@/lib/supabase/servidor";
 
 export default async function MisAventuras() {
@@ -16,8 +17,8 @@ export default async function MisAventuras() {
   }));
 
   return (
-    <main className="space-y-4">
-      <h1 className="text-2xl font-bold">Mis aventuras</h1>
+    <main className="space-y-6">
+      <h1 className={titulo1}>Mis aventuras</h1>
       <ListaAventuras aventuras={aventuras} />
     </main>
   );

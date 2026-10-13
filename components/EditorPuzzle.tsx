@@ -10,7 +10,8 @@ import {
 import type { Parte } from "@/lib/tipos";
 import EditorElemento, { type ElementoEditable } from "./EditorElemento";
 import SubidaImagen from "./SubidaImagen";
-import { boton, botonPeligro, botonSecundario, campo, error as estiloError, tarjeta } from "./estilos";
+import Insignia from "./Insignia";
+import { botonPeligro, botonSecundario, campo, error as estiloError, etiqueta, tarjeta, titulo2 } from "./estilos";
 
 type Props = {
   masterId: string;
@@ -47,7 +48,7 @@ export default function EditorPuzzle(props: Props) {
     const sinContenido = parte === "recompensa" && !elementos.some((e) => e.tipo === "imagen" || (e.texto ?? "").trim());
     return (
       <section className="space-y-2">
-        <h3 className="font-semibold">{rotulo}</h3>
+        <h3 className={etiqueta}>{rotulo}</h3>
         {sinContenido && (
           <p className={estiloError}>Una recompensa necesita al menos un texto o una imagen.</p>
         )}
@@ -83,10 +84,21 @@ export default function EditorPuzzle(props: Props) {
     );
   }
 
+  const incompleto =
+    !contrasena.trim() ||
+    !props.recompensa.some((e) => e.tipo === "imagen" || (e.texto ?? "").trim());
+
   return (
-    <article className={`${tarjeta} space-y-4`}>
+    <article className={`${tarjeta} space-y-4 ${incompleto ? "ring-2 ring-acento" : ""}`}>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="text-lg font-bold">Puzzle {numero}</h2>
+        <div className="flex flex-wrap items-center gap-2">
+          <h2 className={titulo2}>Puzzle {numero}</h2>
+          {incompleto ? (
+            <Insignia variante="aviso" icono="⚠">Incompleto</Insignia>
+          ) : (
+            <Insignia variante="exito" icono="✓">Completo</Insignia>
+          )}
+        </div>
         <div className="flex gap-2">
           <button type="button" disabled={pendiente || esPrimero} onClick={() => ejecutar(() => moverPuzzle(puzzle.id, aventuraId, "subir"))} className={botonSecundario} aria-label="Subir puzzle">↑ Subir</button>
           <button type="button" disabled={pendiente || esUltimo} onClick={() => ejecutar(() => moverPuzzle(puzzle.id, aventuraId, "bajar"))} className={botonSecundario} aria-label="Bajar puzzle">↓ Bajar</button>
@@ -100,11 +112,11 @@ export default function EditorPuzzle(props: Props) {
           </button>
         </div>
       </div>
-      <label className="block text-sm font-medium">
+      <label className={etiqueta}>
         Título (opcional)
         <input value={titulo} onChange={(e) => setTitulo(e.target.value)} onBlur={guardarDatos} className={campo} />
       </label>
-      <label className="block text-sm font-medium">
+      <label className={etiqueta}>
         Contraseña
         <input value={contrasena} onChange={(e) => setContrasena(e.target.value)} onBlur={guardarDatos} className={campo} autoComplete="off" />
       </label>

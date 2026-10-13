@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import FormularioContrasena from "@/components/FormularioContrasena";
 import ContenidoPuzzle from "@/components/ContenidoPuzzle";
-import { tarjeta } from "@/components/estilos";
+import { tarjeta, titulo1 } from "@/components/estilos";
 import { crearClienteAdmin } from "@/lib/supabase/admin";
 import type { Elemento, ElementoVista } from "@/lib/tipos";
 
@@ -37,7 +37,7 @@ export default async function PaginaPuzzle({ params }: { params: { token: string
 
   return (
     <main className={`${tarjeta} space-y-4`}>
-      {puzzle.titulo && <h1 className="text-2xl font-bold">{puzzle.titulo}</h1>}
+      {puzzle.titulo && <h1 className={titulo1}>{puzzle.titulo}</h1>}
       <ContenidoPuzzle elementos={contenido} textosSiempreVisibles />
       <FormularioContrasena token={params.token} />
     </main>

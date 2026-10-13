@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import RejillaQR from "@/components/RejillaQR";
-import { enlace } from "@/components/estilos";
+import { aviso, enlace, titulo1 } from "@/components/estilos";
 import { crearClienteServidor } from "@/lib/supabase/servidor";
 
 export default async function Rejilla({ params }: { params: { id: string } }) {
@@ -32,10 +32,10 @@ export default async function Rejilla({ params }: { params: { id: string } }) {
   });
 
   return (
-    <main className="space-y-4">
-      <h1 className="no-imprimir text-2xl font-bold">Rejilla de QR · {aventura.nombre}</h1>
+    <main className="space-y-6">
+      <h1 className={`no-imprimir ${titulo1} break-words`}>Rejilla de QR · {aventura.nombre}</h1>
       {problemas.length > 0 ? (
-        <div className="space-y-2 rounded-lg bg-red-50 p-4 text-red-800">
+        <div className={`${aviso} space-y-2 p-4`}>
           <p className="font-medium">No se puede generar la rejilla todavía:</p>
           <ul className="list-disc pl-5">
             {problemas.map((m) => <li key={m}>{m}</li>)}

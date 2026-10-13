@@ -17,7 +17,7 @@ export default function RejillaQR({ nombreAventura, puzzles }: Props) {
       </div>
       <ul className="grid grid-cols-2 gap-4 print:grid-cols-3 lg:grid-cols-3">
         {puzzles.map((p) => (
-          <li key={p.token} className="flex flex-col items-center gap-2 rounded-lg border border-slate-300 bg-white p-3 text-center [break-inside:avoid]">
+          <li key={p.token} className="flex flex-col items-center gap-2 rounded-lg border border-borde bg-white p-3 text-center [break-inside:avoid]">
             {origen && <QRCodeSVG value={`${origen}/p/${p.token}`} level="M" marginSize={4} className="h-auto w-full max-w-[200px]" />}
             <span className="text-sm font-medium">{nombreAventura} · Puzzle {p.numero}</span>
           </li>

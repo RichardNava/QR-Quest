@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { crearClienteNavegador } from "@/lib/supabase/cliente";
-import { boton, campo, enlace, tarjeta } from "@/components/estilos";
+import { boton, campo, enlace, tarjeta, titulo1, etiqueta, apoyo } from "@/components/estilos";
 
 export default function Recuperar() {
   const [correo, setCorreo] = useState("");
@@ -24,14 +24,14 @@ export default function Recuperar() {
 
   return (
     <main className={`${tarjeta} mx-auto max-w-md space-y-4`}>
-      <h1 className="text-2xl font-bold">Recuperar contraseña</h1>
+      <h1 className={titulo1}>Recuperar contraseña</h1>
       {enviado ? (
-        <p className="rounded-lg bg-green-50 px-3 py-2 text-green-800">
+        <p className="rounded-lg border border-exito bg-exito-suave px-3 py-2 text-exito">
           Si el correo existe, te hemos enviado un enlace para elegir una contraseña nueva.
         </p>
       ) : (
         <form onSubmit={enviar} className="space-y-3">
-          <label className="block text-sm font-medium">
+          <label className={etiqueta}>
             Correo electrónico
             <input type="email" required value={correo} onChange={(e) => setCorreo(e.target.value)} className={campo} autoComplete="email" />
           </label>
@@ -40,7 +40,7 @@ export default function Recuperar() {
           </button>
         </form>
       )}
-      <p className="text-sm">
+      <p className={apoyo}>
         <Link href="/entrar" className={enlace}>Volver a entrar</Link>
       </p>
     </main>

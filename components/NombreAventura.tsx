@@ -25,7 +25,7 @@ export default function NombreAventura({ id, nombre }: { id: string; nombre: str
         onChange={(e) => setValor(e.target.value)}
         onBlur={guardar}
         aria-label="Nombre de la aventura"
-        className={`${campo} text-xl font-bold`}
+        className={`${campo} text-xl font-bold break-words`}
       />
       {mensaje && <p className={estiloError}>{mensaje}</p>}
     </div>

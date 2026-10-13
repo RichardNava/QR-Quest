@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { comprobarContrasena } from "@/app/p/[token]/actions";
 import type { ElementoVista } from "@/lib/tipos";
 import ContenidoPuzzle from "./ContenidoPuzzle";
-import { boton, campo, error as estiloError } from "./estilos";
+import { aviso, boton, campo, etiqueta, titulo2 } from "./estilos";
 
 export default function FormularioContrasena({ token }: { token: string }) {
   const [intento, setIntento] = useState("");
@@ -25,21 +25,29 @@ export default function FormularioContrasena({ token }: { token: string }) {
   if (premio) {
     return (
       <section className="space-y-4">
-        <h2 className="text-2xl font-bold text-green-700">
+        <h2 className={`${titulo2} text-2xl text-exito`}>
+          <span aria-hidden="true">✓ </span>
           {premio.esFinal ? "¡Fin de la aventura!" : "¡Correcto!"}
         </h2>
-        <ContenidoPuzzle elementos={premio.elementos} />
+        <div className="rounded-lg border border-exito bg-exito-suave p-4">
+          <ContenidoPuzzle elementos={premio.elementos} />
+        </div>
       </section>
     );
   }
 
   return (
     <form onSubmit={enviar} className="space-y-3">
-      <label className="block font-medium">
+      <label className={etiqueta}>
         Contraseña
         <input value={intento} onChange={(e) => setIntento(e.target.value)} className={campo} autoComplete="off" autoCapitalize="off" />
       </label>
-      {mensaje && <p className={estiloError}>{mensaje}</p>}
+      {mensaje && (
+        <p className={aviso} role="alert">
+          <span aria-hidden="true">✕ </span>
+          {mensaje}
+        </p>
+      )}
       <button type="submit" disabled={pendiente || !intento.trim()} className={`${boton} w-full`}>
         {pendiente ? "Comprobando…" : "Comprobar"}
       </button>

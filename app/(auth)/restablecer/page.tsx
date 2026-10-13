@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { crearClienteNavegador } from "@/lib/supabase/cliente";
-import { boton, campo, enlace, error as estiloError, tarjeta } from "@/components/estilos";
+import { boton, campo, enlace, error as estiloError, tarjeta, titulo1, etiqueta } from "@/components/estilos";
 
 export default function Restablecer() {
   const router = useRouter();
@@ -45,7 +45,7 @@ export default function Restablecer() {
 
   return (
     <main className={`${tarjeta} mx-auto max-w-md space-y-4`}>
-      <h1 className="text-2xl font-bold">Nueva contraseña</h1>
+      <h1 className={titulo1}>Nueva contraseña</h1>
       {estado === "cargando" && <p>Comprobando el enlace…</p>}
       {estado === "invalido" && (
         <p className={estiloError}>
@@ -55,7 +55,7 @@ export default function Restablecer() {
       )}
       {estado === "listo" && (
         <form onSubmit={enviar} className="space-y-3">
-          <label className="block text-sm font-medium">
+          <label className={etiqueta}>
             Contraseña nueva
             <input type="password" required minLength={6} value={contrasena} onChange={(e) => setContrasena(e.target.value)} className={campo} autoComplete="new-password" />
           </label>

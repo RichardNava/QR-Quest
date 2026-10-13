@@ -1,11 +1,27 @@
+// Presets de estilo compartidos. Solo usan colores de la paleta (app/globals.css).
+const foco = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acento";
+
 export const boton =
-  "rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 disabled:opacity-50";
+  `inline-flex min-h-[44px] items-center justify-center rounded-lg bg-marca px-4 py-2 font-semibold text-superficie shadow-sm hover:bg-marca-oscura disabled:opacity-50 ${foco}`;
 export const botonSecundario =
-  "rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50";
+  `inline-flex min-h-[44px] items-center justify-center rounded-lg border border-borde bg-superficie px-3 py-2 text-sm font-semibold text-tinta hover:bg-acento-suave disabled:opacity-50 ${foco}`;
 export const botonPeligro =
-  "rounded-lg border border-red-300 bg-white px-3 py-2 text-sm font-medium text-red-700 hover:bg-red-50 disabled:opacity-50";
+  `inline-flex min-h-[44px] items-center justify-center rounded-lg border border-peligro bg-superficie px-3 py-2 text-sm font-semibold text-peligro hover:bg-peligro-suave disabled:opacity-50 ${foco}`;
 export const campo =
-  "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500";
-export const tarjeta = "rounded-xl border border-amber-200 bg-white p-4 shadow-sm";
-export const enlace = "text-indigo-700 underline hover:text-indigo-900";
-export const error = "rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700";
+  "min-h-[44px] w-full rounded-lg border border-borde bg-superficie px-3 py-2 text-base text-tinta focus:border-marca focus:outline-none focus:ring-2 focus:ring-acento";
+export const tarjeta = "rounded-xl border border-borde bg-superficie p-5 shadow-sm";
+export const enlace = "font-medium text-marca underline hover:text-marca-oscura";
+
+// Jerarquía tipográfica
+export const titulo1 = "text-3xl font-extrabold text-tinta";
+export const titulo2 = "text-xl font-bold text-tinta";
+export const etiqueta = "block font-semibold text-tinta";
+export const apoyo = "text-sm text-tinta-suave";
+
+// Avisos
+export const aviso = "rounded-lg border border-peligro bg-peligro-suave px-3 py-2 text-sm text-peligro";
+export const error = aviso;
+export const avisoInfo = "rounded-lg border border-acento bg-acento-suave px-3 py-2 text-sm text-tinta";
+
+// Espaciado de bloques
+export const bloque = "space-y-6";

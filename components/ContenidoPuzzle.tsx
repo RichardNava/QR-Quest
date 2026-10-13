@@ -16,7 +16,7 @@ export default function ContenidoPuzzle({ elementos, textosSiempreVisibles = fal
       {elementos.map((e, i) => {
         if (e.tipo === "texto") {
           return textosVisibles ? (
-            <p key={i} className="whitespace-pre-line text-lg">{e.texto}</p>
+            <p key={i} className="whitespace-pre-line text-lg text-tinta">{e.texto}</p>
           ) : null;
         }
         if (e.modo === "difuminado") return <ImagenDifuminada key={i} url={e.url} />;
@@ -24,7 +24,7 @@ export default function ContenidoPuzzle({ elementos, textosSiempreVisibles = fal
           return <Rompecabezas key={i} url={e.url} alAcabar={() => setResueltos((n) => n + 1)} />;
         }
         // eslint-disable-next-line @next/next/no-img-element
-        return <img key={i} src={e.url} alt="Imagen del puzzle" className="h-auto max-w-full rounded-lg" />;
+        return <img key={i} src={e.url} alt="Imagen del puzzle" className="h-auto max-w-full rounded-lg border border-borde" />;
       })}
     </div>
   );
