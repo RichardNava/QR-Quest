@@ -14,7 +14,7 @@ export default function ImagenDifuminada({ url }: { url: string }) {
           src={url}
           alt="Imagen difuminada"
           onClick={() => setRevelada(true)}
-          className={`h-auto max-w-full transition duration-700 ${revelada ? "blur-0" : "blur-xl"}`}
+          className={`h-auto max-w-full transition duration-700 ${revelada ? "blur-0" : "blur-md"}`}
         />
       </div>
       {!revelada && (
