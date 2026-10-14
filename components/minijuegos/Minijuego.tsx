@@ -4,8 +4,9 @@ import { useState, useTransition } from "react";
 import { probarCodigo, resolverMinijuego } from "@/app/p/[token]/actions";
 import { NOMBRES_NIVEL, NOMBRES_TIPO } from "@/lib/minijuegos/config";
 import type { Nivel, PistasMastermind, TipoMinijuego, Vista } from "@/lib/minijuegos/tipos";
-import { apoyo, aviso, botonSecundario, titulo2 } from "../estilos";
+import { aviso, botonSecundario, titulo2 } from "../estilos";
 import Insignia from "../Insignia";
+import AyudaReglas from "./AyudaReglas";
 import Laberinto from "./Laberinto";
 import LightsOut from "./LightsOut";
 import Mastermind from "./Mastermind";
@@ -66,16 +67,15 @@ export default function Minijuego({ tipo, nivel, vista, token }: Props) {
         <h2 className={titulo2}>
           {NOMBRES_TIPO[tipo]} <span className="text-base normal-case text-tinta-suave">· {NOMBRES_NIVEL[nivel]}</span>
         </h2>
-        {resuelto ? (
-          <Insignia variante="exito" icono="✓">¡Resuelto!</Insignia>
-        ) : (
-          <Insignia variante="aviso" icono="…">Sin resolver</Insignia>
-        )}
+        <div className="flex items-center gap-2">
+          {resuelto ? (
+            <Insignia variante="exito" icono="✓">¡Resuelto!</Insignia>
+          ) : (
+            <Insignia variante="aviso" icono="…">Sin resolver</Insignia>
+          )}
+          <AyudaReglas texto={REGLAS[tipo]} />
+        </div>
       </div>
-      <details className="rounded-lg border border-borde bg-superficie px-3 py-2" open>
-        <summary className="cursor-pointer text-sm font-semibold text-tinta">Cómo se juega</summary>
-        <p className={`${apoyo} mt-1`}>{REGLAS[tipo]}</p>
-      </details>
 
       <div key={partida}>
         {vista.tipo === "laberinto" && <Laberinto vista={vista} alTerminar={alTerminar} bloqueado={bloqueado} />}

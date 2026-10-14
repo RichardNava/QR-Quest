@@ -8,6 +8,9 @@ export const botonSecundario =
   `${base} border-2 border-noche bg-transparent px-3 py-2 text-base text-noche hover:bg-noche hover:text-superficie ${foco}`;
 export const botonPeligro =
   `${base} border-2 border-peligro bg-transparent px-3 py-2 text-base text-peligro hover:bg-peligro hover:text-superficie ${foco}`;
+// Barra «Añadir …» de los editores: todos los botones comparten altura y no parten el texto
+export const botonAnadir =
+  `${base} flex-1 whitespace-nowrap border-2 border-dashed border-noche/50 bg-transparent px-3 py-2 text-base text-noche hover:border-solid hover:bg-noche hover:text-superficie ${foco}`;
 export const campo =
   "min-h-[44px] w-full rounded-lg border-2 font-normal normal-case tracking-normal border-borde bg-superficie px-3 py-2 text-base text-tinta shadow-inner placeholder:text-tinta-suave/70 focus:border-marca focus:outline-none focus:ring-2 focus:ring-acento";
 export const tarjeta =

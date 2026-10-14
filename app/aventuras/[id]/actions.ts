@@ -48,16 +48,19 @@ export async function crearPuzzle(aventuraId: string): Promise<Resultado> {
 export async function actualizarPuzzle(
   id: string,
   aventuraId: string,
-  datos: { titulo: string; contrasena: string }
+  datos: { titulo: string; contrasena: string; numerica: boolean }
 ): Promise<Resultado> {
   const supabase = crearClienteServidor();
+  if (datos.numerica && datos.contrasena.trim() && !/^\d+$/.test(datos.contrasena.trim())) {
+    return { error: "Una contraseña numérica solo puede tener dígitos." };
+  }
   if (!datos.contrasena.trim()) {
     const { data: actual } = await supabase.from("puzzles").select("minijuego").eq("id", id).maybeSingle();
     if (actual?.minijuego) return { error: "Un puzzle con minijuego necesita contraseña." };
   }
   const { error } = await supabase
     .from("puzzles")
-    .update({ titulo: datos.titulo.trim() || null, contrasena: datos.contrasena })
+    .update({ titulo: datos.titulo.trim() || null, contrasena: datos.contrasena, clave_numerica: datos.numerica })
     .eq("id", id);
   if (error) return { error: MSG_GENERICO };
   refrescar(aventuraId);

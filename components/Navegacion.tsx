@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 import CerrarSesion from "./CerrarSesion";
 
 const enlaceBase =
@@ -32,13 +33,26 @@ function Brujula() {
 
 export default function Navegacion({ haySesion }: { haySesion: boolean }) {
   const ruta = usePathname() ?? "/";
+  const cabeceraRef = useRef<HTMLElement>(null);
+
+  // Publica la altura real de la cabecera (puede crecer con el menú de la aventura) para las barras pegajosas
+  useEffect(() => {
+    const el = cabeceraRef.current;
+    if (!el) return;
+    const medir = () => document.documentElement.style.setProperty("--altura-cabecera", `${el.offsetHeight}px`);
+    medir();
+    const observador = new ResizeObserver(medir);
+    observador.observe(el);
+    return () => observador.disconnect();
+  }, [ruta, haySesion]);
+
   const marca = (
     <Link
       href="/"
       className="inline-flex min-h-[48px] items-center gap-2 font-titulo text-2xl font-extrabold uppercase tracking-widest text-superficie focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-acento"
     >
       <span className="text-acento"><Brujula /></span>
-      QR Quest
+      <span>QR <span className="text-acento">Quest</span></span>
     </Link>
   );
   const cabecera = "no-imprimir sticky top-0 z-40 border-b-2 border-acento bg-noche/95 shadow-lg shadow-noche/30 backdrop-blur";
@@ -46,7 +60,7 @@ export default function Navegacion({ haySesion }: { haySesion: boolean }) {
   // El jugador solo ve la marca
   if (ruta.startsWith("/p/")) {
     return (
-      <header className={cabecera}>
+      <header ref={cabeceraRef} className={cabecera}>
         <div className="mx-auto flex max-w-3xl items-center px-4">{marca}</div>
       </header>
     );
@@ -55,7 +69,7 @@ export default function Navegacion({ haySesion }: { haySesion: boolean }) {
   const aventura = ruta.match(/^\/aventuras\/([^/]+)(\/rejilla)?\/?$/);
 
   return (
-    <header className={cabecera}>
+    <header ref={cabeceraRef} className={cabecera}>
       <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-x-3 px-4">
         {marca}
         <nav aria-label="Principal" className="flex flex-wrap items-center gap-x-2">

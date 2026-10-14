@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { crearClienteNavegador } from "@/lib/supabase/cliente";
 import { MAX_BYTES_IMAGEN } from "@/lib/limites";
-import { botonSecundario, error as estiloError } from "./estilos";
+import { botonAnadir, error as estiloError } from "./estilos";
 
 type Props = {
   masterId: string;
@@ -52,12 +52,12 @@ export default function SubidaImagen({ masterId, aventuraId, alSubir }: Props) {
   }
 
   return (
-    <div className="space-y-2">
+    <>
       <input ref={entrada} type="file" accept="image/*" onChange={elegir} className="hidden" />
-      <button type="button" disabled={subiendo} onClick={() => entrada.current?.click()} className={botonSecundario}>
-        {subiendo ? "Subiendo…" : "Añadir imagen"}
+      <button type="button" disabled={subiendo} onClick={() => entrada.current?.click()} className={botonAnadir}>
+        {subiendo ? "Subiendo…" : "+ Añadir imagen"}
       </button>
-      {mensaje && <p className={estiloError}>{mensaje}</p>}
-    </div>
+      {mensaje && <p className={`${estiloError} basis-full`}>{mensaje}</p>}
+    </>
   );
 }

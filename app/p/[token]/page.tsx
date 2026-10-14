@@ -14,7 +14,7 @@ export default async function PaginaPuzzle({ params }: { params: { token: string
   // Nunca se selecciona `contrasena`: no debe llegar al navegador del jugador
   const { data: puzzle } = await admin
     .from("puzzles")
-    .select("id, titulo, minijuego")
+    .select("id, titulo, minijuego, clave_numerica, longitud_clave")
     .eq("token", params.token)
     .maybeSingle();
   if (!puzzle) notFound();
@@ -47,7 +47,7 @@ export default async function PaginaPuzzle({ params }: { params: { token: string
       {minijuego && (
         <Minijuego tipo={minijuego.tipo} nivel={minijuego.nivel} vista={generarVista(minijuego)} token={params.token} />
       )}
-      <FormularioContrasena token={params.token} />
+      <FormularioContrasena token={params.token} casillas={puzzle.clave_numerica ? puzzle.longitud_clave : null} />
     </main>
   );
 }

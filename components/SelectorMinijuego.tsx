@@ -13,10 +13,12 @@ type Props = {
   token: string;
   minijuego: TipoGuardado | null;
   vista: Vista | null;
+  /** Panel «Añadir minijuego»; el botón que lo abre está en la barra del editor */
+  abierto: boolean;
+  alCerrar: () => void;
 };
 
-export default function SelectorMinijuego({ puzzleId, aventuraId, token, minijuego, vista }: Props) {
-  const [abierto, setAbierto] = useState(false);
+export default function SelectorMinijuego({ puzzleId, aventuraId, token, minijuego, vista, abierto, alCerrar }: Props) {
   const [tipo, setTipo] = useState<TipoMinijuego>(minijuego?.tipo ?? TIPOS_DISPONIBLES[0]);
   const [nivel, setNivel] = useState<Nivel>(minijuego?.nivel ?? "facil");
   const [mensaje, setMensaje] = useState("");
@@ -53,13 +55,10 @@ export default function SelectorMinijuego({ puzzleId, aventuraId, token, minijue
   );
 
   if (!minijuego || !vista) {
+    if (!abierto && !mensaje) return null;
     return (
       <div className="space-y-2">
-        {!abierto ? (
-          <button type="button" className={botonSecundario} onClick={() => setAbierto(true)}>
-            Añadir minijuego
-          </button>
-        ) : (
+        {abierto && (
           <div className="space-y-2 rounded-lg border border-borde bg-papel p-3">
             {selectores}
             <div className="flex flex-wrap gap-2">
@@ -67,11 +66,11 @@ export default function SelectorMinijuego({ puzzleId, aventuraId, token, minijue
                 type="button"
                 disabled={pendiente}
                 className={botonSecundario}
-                onClick={() => ejecutar(() => guardarMinijuego(puzzleId, aventuraId, tipo, nivel), () => setAbierto(false))}
+                onClick={() => ejecutar(() => guardarMinijuego(puzzleId, aventuraId, tipo, nivel), alCerrar)}
               >
                 {pendiente ? "Generando…" : "Generar"}
               </button>
-              <button type="button" disabled={pendiente} className={botonSecundario} onClick={() => setAbierto(false)}>
+              <button type="button" disabled={pendiente} className={botonSecundario} onClick={alCerrar}>
                 Cancelar
               </button>
             </div>

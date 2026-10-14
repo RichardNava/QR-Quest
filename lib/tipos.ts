@@ -21,6 +21,7 @@ export type Puzzle = {
   token: string;
   titulo: string | null;
   contrasena: string;
+  clave_numerica: boolean;
   minijuego: Minijuego | null;
 };
 

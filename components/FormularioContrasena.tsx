@@ -4,9 +4,10 @@ import { useState, useTransition } from "react";
 import { comprobarContrasena } from "@/app/p/[token]/actions";
 import type { ElementoVista } from "@/lib/tipos";
 import ContenidoPuzzle from "./ContenidoPuzzle";
+import CasillasDigitos from "./CasillasDigitos";
 import { aviso, boton, campo, etiqueta, titulo2 } from "./estilos";
 
-export default function FormularioContrasena({ token }: { token: string }) {
+export default function FormularioContrasena({ token, casillas }: { token: string; casillas: number | null }) {
   const [intento, setIntento] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [premio, setPremio] = useState<{ elementos: ElementoVista[]; esFinal: boolean } | null>(null);
@@ -38,17 +39,24 @@ export default function FormularioContrasena({ token }: { token: string }) {
 
   return (
     <form onSubmit={enviar} className="space-y-3">
-      <label className={etiqueta}>
-        Contraseña
-        <input value={intento} onChange={(e) => setIntento(e.target.value)} className={campo} autoComplete="off" autoCapitalize="off" />
-      </label>
+      {casillas ? (
+        <div className="space-y-1">
+          <p className={etiqueta}>Contraseña ({casillas} dígitos)</p>
+          <CasillasDigitos longitud={casillas} valor={intento} alCambiar={setIntento} />
+        </div>
+      ) : (
+        <label className={etiqueta}>
+          Contraseña
+          <input value={intento} onChange={(e) => setIntento(e.target.value)} className={campo} autoComplete="off" autoCapitalize="off" />
+        </label>
+      )}
       {mensaje && (
         <p className={aviso} role="alert">
           <span aria-hidden="true">✕ </span>
           {mensaje}
         </p>
       )}
-      <button type="submit" disabled={pendiente || !intento.trim()} className={`${boton} w-full`}>
+      <button type="submit" disabled={pendiente || (casillas ? intento.length < casillas : !intento.trim())} className={`${boton} w-full`}>
         {pendiente ? "Comprobando…" : "Comprobar"}
       </button>
     </form>

@@ -68,7 +68,7 @@ export default async function EditorAventura({ params }: { params: { id: string 
           key={p.id}
           masterId={usuario.user!.id}
           aventuraId={aventura.id}
-          puzzle={{ id: p.id, titulo: p.titulo, contrasena: p.contrasena, token: p.token }}
+          puzzle={{ id: p.id, titulo: p.titulo, contrasena: p.contrasena, numerica: p.clave_numerica, token: p.token }}
           minijuego={minijuego}
           vista={minijuego ? generarVista(minijuego) : null}
           numero={i + 1}
