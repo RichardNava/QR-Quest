@@ -2,6 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { crearClienteServidor } from "@/lib/supabase/servidor";
+import { TIPOS_DISPONIBLES } from "@/lib/minijuegos/config";
+import { huella, leerMinijuego } from "@/lib/minijuegos";
+import { nuevaSemilla } from "@/lib/minijuegos/prng";
+import type { Minijuego, Nivel, TipoMinijuego } from "@/lib/minijuegos/tipos";
 import type { Modo, Parte, Resultado } from "@/lib/tipos";
 
 const MSG_LIMITE = "Esta aventura ya tiene 40 imágenes, el máximo permitido.";
@@ -47,10 +51,56 @@ export async function actualizarPuzzle(
   datos: { titulo: string; contrasena: string }
 ): Promise<Resultado> {
   const supabase = crearClienteServidor();
+  if (!datos.contrasena.trim()) {
+    const { data: actual } = await supabase.from("puzzles").select("minijuego").eq("id", id).maybeSingle();
+    if (actual?.minijuego) return { error: "Un puzzle con minijuego necesita contraseña." };
+  }
   const { error } = await supabase
     .from("puzzles")
     .update({ titulo: datos.titulo.trim() || null, contrasena: datos.contrasena })
     .eq("id", id);
+  if (error) return { error: MSG_GENERICO };
+  refrescar(aventuraId);
+  return {};
+}
+
+const NIVELES_ADMITIDOS: Nivel[] = ["facil", "medio", "dificil"];
+
+/** Crea (o cambia) el minijuego de un puzzle con una semilla nueva */
+export async function guardarMinijuego(
+  puzzleId: string,
+  aventuraId: string,
+  tipo: TipoMinijuego,
+  nivel: Nivel
+): Promise<Resultado> {
+  if (!TIPOS_DISPONIBLES.includes(tipo) || !NIVELES_ADMITIDOS.includes(nivel)) {
+    return { error: "Ese minijuego no está disponible." };
+  }
+  const supabase = crearClienteServidor();
+  const { data: puzzle } = await supabase
+    .from("puzzles")
+    .select("contrasena, minijuego")
+    .eq("id", puzzleId)
+    .maybeSingle();
+  if (!puzzle) return { error: MSG_GENERICO };
+  if (!String(puzzle.contrasena ?? "").trim()) return { error: "Define primero la contraseña del puzzle." };
+
+  // Si ya había uno del mismo tipo y nivel, el nuevo debe ser distinto (hasta 10 intentos)
+  const anterior = leerMinijuego(puzzle.minijuego);
+  const mismoTipo = anterior && anterior.tipo === tipo && anterior.nivel === nivel ? huella(anterior) : null;
+  let nuevo: Minijuego = { tipo, nivel, semilla: nuevaSemilla() };
+  for (let i = 0; i < 10 && mismoTipo !== null && huella(nuevo) === mismoTipo; i++) {
+    nuevo = { tipo, nivel, semilla: nuevaSemilla() };
+  }
+  const { error } = await supabase.from("puzzles").update({ minijuego: nuevo }).eq("id", puzzleId);
+  if (error) return { error: MSG_GENERICO };
+  refrescar(aventuraId);
+  return {};
+}
+
+export async function quitarMinijuego(puzzleId: string, aventuraId: string): Promise<Resultado> {
+  const supabase = crearClienteServidor();
+  const { error } = await supabase.from("puzzles").update({ minijuego: null }).eq("id", puzzleId);
   if (error) return { error: MSG_GENERICO };
   refrescar(aventuraId);
   return {};

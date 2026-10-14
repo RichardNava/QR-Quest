@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import FormularioContrasena from "@/components/FormularioContrasena";
 import ContenidoPuzzle from "@/components/ContenidoPuzzle";
+import Minijuego from "@/components/minijuegos/Minijuego";
 import { tarjeta, titulo1 } from "@/components/estilos";
 import { crearClienteAdmin } from "@/lib/supabase/admin";
+import { generarVista, leerMinijuego } from "@/lib/minijuegos";
 import type { Elemento, ElementoVista } from "@/lib/tipos";
 
 export const dynamic = "force-dynamic";
@@ -12,7 +14,7 @@ export default async function PaginaPuzzle({ params }: { params: { token: string
   // Nunca se selecciona `contrasena`: no debe llegar al navegador del jugador
   const { data: puzzle } = await admin
     .from("puzzles")
-    .select("id, titulo")
+    .select("id, titulo, minijuego")
     .eq("token", params.token)
     .maybeSingle();
   if (!puzzle) notFound();
@@ -35,10 +37,16 @@ export default async function PaginaPuzzle({ params }: { params: { token: string
     )
   ).filter((c): c is ElementoVista => c !== null);
 
+  // La vista se calcula aquí: el navegador nunca recibe la receta del tablero, la solución ni la contraseña
+  const minijuego = leerMinijuego(puzzle.minijuego);
+
   return (
     <main className={`${tarjeta} space-y-4`}>
       {puzzle.titulo && <h1 className={titulo1}>{puzzle.titulo}</h1>}
       <ContenidoPuzzle elementos={contenido} textosSiempreVisibles />
+      {minijuego && (
+        <Minijuego tipo={minijuego.tipo} nivel={minijuego.nivel} vista={generarVista(minijuego)} token={params.token} />
+      )}
       <FormularioContrasena token={params.token} />
     </main>
   );

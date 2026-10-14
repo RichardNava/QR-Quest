@@ -5,6 +5,7 @@ import EditorPuzzle from "@/components/EditorPuzzle";
 import NombreAventura from "@/components/NombreAventura";
 import { apoyo, botonSecundario } from "@/components/estilos";
 import { MAX_IMAGENES_AVENTURA } from "@/lib/limites";
+import { generarVista, leerMinijuego } from "@/lib/minijuegos";
 import { crearClienteServidor } from "@/lib/supabase/servidor";
 import type { Elemento, Puzzle } from "@/lib/tipos";
 
@@ -60,19 +61,24 @@ export default async function EditorAventura({ params }: { params: { id: string 
       <p className={apoyo}>
         {totalImagenes} de {MAX_IMAGENES_AVENTURA} imágenes
       </p>
-      {puzzles.map((p, i) => (
+      {puzzles.map((p, i) => {
+        const minijuego = leerMinijuego(p.minijuego);
+        return (
         <EditorPuzzle
           key={p.id}
           masterId={usuario.user!.id}
           aventuraId={aventura.id}
-          puzzle={{ id: p.id, titulo: p.titulo, contrasena: p.contrasena }}
+          puzzle={{ id: p.id, titulo: p.titulo, contrasena: p.contrasena, token: p.token }}
+          minijuego={minijuego}
+          vista={minijuego ? generarVista(minijuego) : null}
           numero={i + 1}
           esPrimero={i === 0}
           esUltimo={i === puzzles.length - 1}
           enunciado={elementos.filter((e) => e.puzzle_id === p.id && e.parte === "enunciado").map(aVista)}
           recompensa={elementos.filter((e) => e.puzzle_id === p.id && e.parte === "recompensa").map(aVista)}
         />
-      ))}
+        );
+      })}
       <BotonAnadirPuzzle aventuraId={aventura.id} />
     </main>
   );

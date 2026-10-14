@@ -7,8 +7,10 @@ import {
   eliminarPuzzle,
   moverPuzzle,
 } from "@/app/aventuras/[id]/actions";
+import type { Minijuego, Vista } from "@/lib/minijuegos/tipos";
 import type { Parte } from "@/lib/tipos";
 import EditorElemento, { type ElementoEditable } from "./EditorElemento";
+import SelectorMinijuego from "./SelectorMinijuego";
 import SubidaImagen from "./SubidaImagen";
 import Insignia from "./Insignia";
 import { botonPeligro, botonSecundario, campo, error as estiloError, etiqueta, tarjeta, titulo2 } from "./estilos";
@@ -16,7 +18,9 @@ import { botonPeligro, botonSecundario, campo, error as estiloError, etiqueta, t
 type Props = {
   masterId: string;
   aventuraId: string;
-  puzzle: { id: string; titulo: string | null; contrasena: string };
+  puzzle: { id: string; titulo: string | null; contrasena: string; token: string };
+  minijuego: Minijuego | null;
+  vista: Vista | null;
   numero: number;
   esPrimero: boolean;
   esUltimo: boolean;
@@ -80,6 +84,15 @@ export default function EditorPuzzle(props: Props) {
             }}
           />
         </div>
+        {parte === "enunciado" && (
+          <SelectorMinijuego
+            puzzleId={puzzle.id}
+            aventuraId={aventuraId}
+            token={puzzle.token}
+            minijuego={props.minijuego}
+            vista={props.vista}
+          />
+        )}
       </section>
     );
   }
@@ -120,6 +133,9 @@ export default function EditorPuzzle(props: Props) {
         Contraseña
         <input value={contrasena} onChange={(e) => setContrasena(e.target.value)} onBlur={guardarDatos} className={campo} autoComplete="off" />
       </label>
+      {props.minijuego && !contrasena.trim() && (
+        <p className={estiloError}>Un puzzle con minijuego necesita contraseña: es lo que el jugador obtiene al resolverlo.</p>
+      )}
       {seccion("enunciado", props.enunciado, "Enunciado")}
       {seccion("recompensa", props.recompensa, esUltimo ? "Mensaje de final de la aventura" : "Recompensa")}
       {mensaje && <p className={estiloError}>{mensaje}</p>}

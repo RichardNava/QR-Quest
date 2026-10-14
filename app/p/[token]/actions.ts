@@ -2,6 +2,8 @@
 
 import { normalizar } from "@/lib/normalizar";
 import { crearClienteAdmin } from "@/lib/supabase/admin";
+import { formatoValido, leerMinijuego, pistasMastermind, verificarRespuesta } from "@/lib/minijuegos";
+import type { PistasMastermind } from "@/lib/minijuegos/tipos";
 import type { Elemento, ElementoVista } from "@/lib/tipos";
 
 export type RespuestaContrasena =
@@ -51,4 +53,57 @@ export async function comprobarContrasena(token: string, intento: string): Promi
   const esFinal = (posteriores ?? []).length === 0;
 
   return { ok: true, recompensa, esFinal };
+}
+
+export type RespuestaMinijuego = { ok: true; contrasena: string } | { ok: false; mensaje: string };
+
+export type RespuestaCodigo =
+  | { ok: true; resuelto: false; pistas: PistasMastermind }
+  | { ok: true; resuelto: true; contrasena: string }
+  | { ok: false; mensaje: string };
+
+async function cargarMinijuego(token: string) {
+  const admin = crearClienteAdmin();
+  const { data: puzzle } = await admin
+    .from("puzzles")
+    .select("contrasena, minijuego")
+    .eq("token", token)
+    .maybeSingle();
+  if (!puzzle) return { ok: false, mensaje: NO_EXISTE } as const;
+  const minijuego = leerMinijuego(puzzle.minijuego);
+  return { ok: true, minijuego, contrasena: puzzle.contrasena as string } as const;
+}
+
+/**
+ * Comprueba la solución de un minijuego (todos menos Mastermind). Solo si el servidor la da por
+ * buena devuelve la contraseña: el navegador nunca la recibe antes.
+ */
+export async function resolverMinijuego(token: string, respuesta: unknown): Promise<RespuestaMinijuego> {
+  try {
+    const datos = await cargarMinijuego(token);
+    if (!datos.ok) return datos;
+    const { minijuego, contrasena } = datos;
+    if (!minijuego || minijuego.tipo === "mastermind") return { ok: false, mensaje: "Este puzzle no se resuelve así." };
+    if (!formatoValido(minijuego, respuesta)) return { ok: false, mensaje: "La solución no es válida." };
+    if (!verificarRespuesta(minijuego, respuesta)) return { ok: false, mensaje: "Todavía no está resuelto." };
+    return { ok: true, contrasena };
+  } catch {
+    return { ok: false, mensaje: "La solución no es válida." };
+  }
+}
+
+/** Mastermind: cada intento se comprueba aquí porque el código secreto no puede salir del servidor */
+export async function probarCodigo(token: string, codigo: unknown): Promise<RespuestaCodigo> {
+  try {
+    const datos = await cargarMinijuego(token);
+    if (!datos.ok) return datos;
+    const { minijuego, contrasena } = datos;
+    if (!minijuego || minijuego.tipo !== "mastermind") return { ok: false, mensaje: "Este puzzle no se resuelve así." };
+    const pistas = pistasMastermind(minijuego, codigo);
+    if (!pistas) return { ok: false, mensaje: "La combinación no es válida." };
+    if (verificarRespuesta(minijuego, { codigo })) return { ok: true, resuelto: true, contrasena };
+    return { ok: true, resuelto: false, pistas };
+  } catch {
+    return { ok: false, mensaje: "La combinación no es válida." };
+  }
 }

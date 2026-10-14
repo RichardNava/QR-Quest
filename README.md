@@ -11,12 +11,14 @@ Toda la interfaz está en español de España.
 - Crear, renombrar y eliminar aventuras.
 - Editar puzzles: título, enunciado (textos e imágenes), contraseña y recompensa (varios textos e imágenes, mínimo un elemento). Reordenar puzzles.
 - Modos por imagen en la recompensa: **normal**, **difuminada** o **rompecabezas** (arrastrar y soltar).
+- **Minijuegos generados automáticamente** (opcionales, uno por puzzle): Rush Hour, Lights Out, Mastermind, Sudoku y Laberinto, en tres niveles de dificultad. Se crean con un algoritmo propio (sin IA ni servicios externos) desde el botón «Añadir minijuego» del enunciado, con vista previa y «Generar de nuevo».
 - Rejilla de QR imprimible, con etiqueta "Aventura · Puzzle N" y sin QR cortados entre páginas.
 - Los QR impresos siguen funcionando aunque se reordenen o editen otros puzzles; un puzzle borrado muestra un mensaje amable de que ya no existe.
 
 **Para el jugador (sin cuenta)**
 - Escanea el QR y ve el enunciado en `/p/<token>`.
 - La contraseña no distingue mayúsculas, minúsculas ni tildes; intentos ilimitados.
+- Si el puzzle tiene minijuego, al resolverlo se muestra la contraseña del puzzle para escribirla en el campo habitual (también se puede escribir directamente sin jugar).
 - La recompensa solo se envía al navegador tras acertar. Recargar la página vuelve a pedir la contraseña.
 
 ## Tecnología
@@ -33,6 +35,7 @@ Toda la interfaz está en español de España.
 app/            Rutas (auth, aventuras, jugador /p/[token])
 components/     Componentes de interfaz y presets de estilo (estilos.ts)
 lib/            Lógica compartida (normalizar, barajar, límites) y clientes de Supabase
+lib/minijuegos/ Generadores y verificadores de los cinco minijuegos (solo servidor, salvo tipos, config y reglas)
 supabase/       Migraciones SQL (esquema, RLS, bucket, límites)
 tests/unit/     Pruebas unitarias
 specs/          Especificaciones, planes y tareas (Spec Kit)
@@ -64,7 +67,7 @@ npm install
 
 ### 2. Configurar Supabase
 1. Crea un proyecto en Supabase.
-2. En el editor SQL ejecuta, en orden, `supabase/migrations/0001_inicial.sql` y `supabase/migrations/0002_modos_en_enunciado.sql` (tablas, reglas de seguridad, bucket `imagenes` y límite de 40 imágenes por aventura).
+2. En el editor SQL ejecuta, en orden, `supabase/migrations/0001_inicial.sql`, `supabase/migrations/0002_modos_en_enunciado.sql` (tablas, reglas de seguridad, bucket `imagenes` y límite de 40 imágenes por aventura) y `supabase/migrations/0003_minijuego.sql` (columna del minijuego de cada puzzle).
 3. En *Authentication* desactiva "Confirm email" y, para recuperar contraseñas, configura el SMTP (p. ej. Resend).
 
 ### 3. Variables de entorno
@@ -101,6 +104,7 @@ npm run dev      # http://localhost:3000
 
 - Las contraseñas de los puzzles y las recompensas **no se envían** al navegador del jugador; se comprueban en una acción de servidor.
 - Acceso a datos del master protegido con RLS de Supabase; una aventura ajena aparece como "no encontrada".
+- Del minijuego solo se guarda una «receta» (tipo, nivel y semilla). El navegador recibe el tablero inicial, nunca la semilla ni la solución, y la contraseña solo se entrega cuando el servidor da por buena la solución.
 - Los tokens de los puzzles son aleatorios e inmutables; no hay rutas que listen puzzles.
 - Máximo **4 MB por imagen** y **40 imágenes por aventura**.
 
@@ -109,4 +113,5 @@ npm run dev      # http://localhost:3000
 El desarrollo sigue [Spec Kit](https://github.com/github/spec-kit). Consulta la carpeta [`specs/`](specs):
 - [`001-qr-quest-v0`](specs/001-qr-quest-v0): especificación, plan, modelo de datos, contratos y [guía de comprobación manual](specs/001-qr-quest-v0/quickstart.md).
 - [`002-mejora-visual-navegacion`](specs/002-mejora-visual-navegacion): mejora visual y de navegación.
+- [`003-generador-puzzles`](specs/003-generador-puzzles): minijuegos generados automáticamente.
 - Principios del proyecto: [`.specify/memory/constitution.md`](.specify/memory/constitution.md).

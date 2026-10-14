@@ -1,3 +1,5 @@
+import type { Minijuego } from "./minijuegos/tipos";
+
 export type Parte = "enunciado" | "recompensa";
 export type Modo = "normal" | "difuminado" | "rompecabezas";
 
@@ -19,6 +21,7 @@ export type Puzzle = {
   token: string;
   titulo: string | null;
   contrasena: string;
+  minijuego: Minijuego | null;
 };
 
 export type Resultado = { error?: string };
