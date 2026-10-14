@@ -48,6 +48,23 @@
     -webkit-mask-size: 580px 580px;
     mask-size: 580px 580px;
   }
+  /* Ruta de mapa del tesoro: línea discontinua con una X al final */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: rgb(var(--color-marca) / 0.22);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800' fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M80 720C220 620 140 500 320 470S520 570 600 440 560 280 720 250 960 340 1030 190' stroke-width='5' stroke-dasharray='4 16'/%3E%3Ccircle cx='80' cy='720' r='10' stroke-width='5'/%3E%3Cpath d='M1002 162l56 56M1058 162l-56 56' stroke-width='11'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800' fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M80 720C220 620 140 500 320 470S520 570 600 440 560 280 720 250 960 340 1030 190' stroke-width='5' stroke-dasharray='4 16'/%3E%3Ccircle cx='80' cy='720' r='10' stroke-width='5'/%3E%3Cpath d='M1002 162l56 56M1058 162l-56 56' stroke-width='11'/%3E%3C/svg%3E");
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
 }
 
 @layer components {
@@ -76,5 +93,5 @@
 @media print {
   .no-imprimir { display: none !important; }
   html, body { background: #fff !important; background-image: none !important; }
-  body::before { display: none; }
+  body::before, body::after { display: none; }
 }
